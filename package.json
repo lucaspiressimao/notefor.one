@@ -1,0 +1,23 @@
+{
+  "name": "notefor.one",
+  "private": true,
+  "description": "a one time private note sharing ",
+  "main": "src",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "crypto": "0.0.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.13.3",
+    "express-handlebars": "^3.0.0",
+    "mongodb": "^3.1.13",
+    "mongodb-memory-server": "6.9.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.2"
+  }
+}
