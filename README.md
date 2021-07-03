@@ -58,7 +58,7 @@ To use Docker image we will need to set:
 2 - SECRET=<32 digit pass phrase>
 3 - PUBLIC_URL=http://localhost:3000 <use yout custom domain if needed>
 
-``` docker run -d -e IV=97c13107fcbc9a67 -e SECRET=84b816f85bf46ced22c9c55cd5067c45 -e PUBLIC_URL=http://localhost:3000 -p 3000:80 lucaspiressimao/notefor.one:latest ```
+``` docker run -d -e IV=97c13107fcbc9a67 -e SECRET=84b816f85bf46ced22c9c55cd5067c45 -e PUBLIC_URL=http://localhost:3000 -p 3000:80 dooloop/notefor.one:latest ```
 
 This will set IV and secret to your image and set public url to localhost (CHANGE IT FOR OTHER ENVIRONMENTS)
 
