@@ -1,34 +1,28 @@
-## Welcome to GitHub Pages
+## Welcome to notefor.one
 
-You can use the [editor on GitHub](https://github.com/lucaspiressimao/notefor.one/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+A small application written in Node/Express on the server and vanilla javascript on the client. It allows you to send encrypted one-time-use messages to someone via unique URL's that are generated on the server - once someone views the note, the note is destroyed.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+made from https://github.com/joshterrill/hushnote
 
-### Markdown
+### Spinning up your own instance
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Install dependencies by typing npm install
 
-```markdown
-Syntax highlighted code block
+Rename the .env.example file to be .env
 
-# Header 1
-## Header 2
-### Header 3
+In order for the server-side encryption and decryption to work correctly, an IV needs to be generated. This is a 16-character string that looks something like this: f8b43da1eb3cc7c5 which is the example that was put inside of the .env.example file. If you would like to generate your own, you can do so by running: node generate-iv.js
 
-- Bulleted
-- List
+Type npm start to run
 
-1. Numbered
-2. List
+### Docker
 
-**Bold** and _Italic_ and `Code` text
+To use Docker image we will need to set: 1 - IV=<the IV code 16 digit -> generated with node generate-iv.js> 2 - SECRET=<32 digit pass phrase> 3 - PUBLIC_URL=http://localhost:3000
 
-[Link](url) and ![Image](src)
-```
+docker run -d -e IV=97c13107fcbc9a67 -e SECRET=84b816f85bf46ced22c9c55cd5067c45 -e PUBLIC_URL=http://localhost:3000 -p 3000:80 dooloop/notefor.one:latest
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+This will set IV and secret to your image and set public url to localhost (CHANGE IT FOR OTHER ENVIRONMENTS)
 
-### Jekyll Themes
+It will acessible from http://localhost:3000
 
 Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/lucaspiressimao/notefor.one/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
