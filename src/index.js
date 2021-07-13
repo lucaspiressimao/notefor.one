@@ -14,6 +14,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 const host = process.env.HOST || "0.0.0.0";
 
+const memoryMongo = process.env.MEMORY_MONGO
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
@@ -23,12 +25,15 @@ app.set("view engine", "handlebars");
 app.set("views", __dirname + "/views/");
 
 (async function () {
-
-    MongoClient.connect(await mongoServer.getUri(), { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
+    
+    const mongoURI = memoryMongo ? await mongoServer.getUri() : process.env.MONGO_URL
+    const mongoDB = memoryMongo ? await mongoServer.getDbName() : process.env.MONGO_DB
+    
+    MongoClient.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
         if (err) return console.error(err);
         app.listen(port, host, async () => {
             console.log("Listening on port " + port);
-            app.use(api({ db: client.db(await mongoServer.getDbName()) }));
+            app.use(api({ db: client.db(mongoDB) }));
             app.use((req, res) => {
                 res.render("404");
             });
