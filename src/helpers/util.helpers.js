@@ -18,8 +18,12 @@ module.exports = {
   },
 
   decrypt(text, password) {
-    const decipher = crypto.createCipheriv(process.env.ALGORITHM, (password + process.env.SECRET).substr(0, 32), process.env.IV)
-    let dec = decipher.update(text, 'hex', 'utf8')
+    const decipher = crypto.createDecipheriv(
+      process.env.ALGORITHM,
+      (password + process.env.SECRET).substr(0, 32),
+      process.env.IV
+    );
+    let dec = decipher.update(text, 'hex', 'utf8');
     dec += decipher.final('utf8');
     return dec;
   },
