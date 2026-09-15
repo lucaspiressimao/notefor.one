@@ -1,7 +1,7 @@
 # notefor.one
 
-[![CI](https://github.com/lucaspiressimao/notefor.one/actions/workflows/ci.yml/badge.svg)](https://github.com/lucaspiressimao/notefor.one/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/lucaspiressimao/notefor.one/actions/workflows/codeql.yml/badge.svg)](https://github.com/lucaspiressimao/notefor.one/actions/workflows/codeql.yml)
+[![CI](https://github.com/notefor-one/notefor.one/actions/workflows/ci.yml/badge.svg)](https://github.com/notefor-one/notefor.one/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/notefor-one/notefor.one/actions/workflows/codeql.yml/badge.svg)](https://github.com/notefor-one/notefor.one/actions/workflows/codeql.yml)
 [![MIT License](https://img.shields.io/badge/license-MIT-47e0bd.svg)](LICENSE)
 [![Node.js 20+](https://img.shields.io/badge/node-%3E%3D20.19-2bd1df.svg)](package.json)
 
@@ -36,7 +36,7 @@ The random 256-bit key lives after `#` in the URL. [URL fragments are not includ
 Requirements: Node.js 20.19 or newer. The local memory store requires no database and intentionally loses all notes when the process stops.
 
 ```bash
-git clone https://github.com/lucaspiressimao/notefor.one.git
+git clone https://github.com/notefor-one/notefor.one.git
 cd notefor.one
 nvm use
 npm ci
@@ -93,7 +93,7 @@ The design protects stored content from database-only compromise, accidental lin
 
 ## Contributing
 
-Bug reports, design discussions, documentation improvements, tests, and code contributions are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md), browse the [issues](https://github.com/lucaspiressimao/notefor.one/issues), or open a [discussion](https://github.com/lucaspiressimao/notefor.one/discussions).
+Bug reports, design discussions, documentation improvements, tests, and code contributions are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md), browse the [issues](https://github.com/notefor-one/notefor.one/issues), or open a [discussion](https://github.com/notefor-one/notefor.one/discussions).
 
 ## Version 2 migration
 
