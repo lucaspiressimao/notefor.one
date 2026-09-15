@@ -1,6 +1,6 @@
 {
   "name": "notefor.one",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "description": "End-to-end encrypted, one-time note sharing",
   "main": "src/index.js",

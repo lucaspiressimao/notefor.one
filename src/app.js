@@ -63,6 +63,10 @@ function createApp({ notes, trustProxy = false }) {
     windowMs: 5 * 60 * 1000, limit: 120, standardHeaders: "draft-8", legacyHeaders: false,
     message: { error: "Too many read attempts. Please try again later." },
   });
+  const pageLimiter = rateLimit({
+    windowMs: 60 * 1000, limit: 300, standardHeaders: "draft-8", legacyHeaders: false,
+    message: "Too many page requests. Please try again later.",
+  });
 
   app.get("/healthz", async (req, res, next) => {
     try {
@@ -101,7 +105,7 @@ function createApp({ notes, trustProxy = false }) {
     } catch (error) { return next(error); }
   });
 
-  app.get("/read/:id", (req, res) => {
+  app.get("/read/:id", pageLimiter, (req, res) => {
     if (!ID_PATTERN.test(req.params.id)) {
       return res.status(404).sendFile(path.join(publicDirectory, "404.html"));
     }

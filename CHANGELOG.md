@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1 — 2026-09-15
+
+- Added explicit rate limiting to one-time note pages following CodeQL review.
+
 ## 2.0.0 — 2026-09-15
 
 ### Security
