@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/lucaspiressimao/notefor.one/security/advisories/new
+    about: Report vulnerabilities privately. Do not disclose security issues publicly.
+  - name: Questions and ideas
+    url: https://github.com/lucaspiressimao/notefor.one/discussions
+    about: Ask for help or discuss ideas with the community.

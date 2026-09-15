@@ -1,0 +1,47 @@
+name: Bug report
+description: Report a reproducible problem that is not security-sensitive
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Never include private notes, keys, credentials, or vulnerability details here.
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Explain the observed and expected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      placeholder: |-
+        1. Start the application with…
+        2. Open…
+        3. Observe…
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+    validations:
+      required: true
+  - type: dropdown
+    id: deployment
+    attributes:
+      label: Environment
+      options:
+        - Local memory store
+        - Docker with MongoDB
+        - Other self-hosted deployment
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized logs
+      description: Remove secrets, URLs containing fragments, connection strings, and private content.
+      render: shell
