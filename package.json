@@ -1,23 +1,24 @@
 {
   "name": "notefor.one",
+  "version": "2.0.0",
   "private": true,
-  "description": "a one time private note sharing ",
-  "main": "src",
+  "description": "End-to-end encrypted, one-time note sharing",
+  "main": "src/index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "start": "node src"
+    "start": "node src/index.js",
+    "test": "node --test"
   },
+  "engines": { "node": ">=20.19.0" },
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.14.1",
-    "crypto": "0.0.3",
-    "dotenv": "^8.2.0",
-    "express": "^4.13.3",
-    "express-handlebars": "^3.0.0",
-    "mongodb": "^3.1.13",
-    "mongodb-memory-server": "6.9.6"
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "helmet": "^8.3.0",
+    "mongodb": "^7.6.0"
   },
   "devDependencies": {
-    "nodemon": "^1.9.2"
+    "nodemon": "^3.1.14"
   }
 }

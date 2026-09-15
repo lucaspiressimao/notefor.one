@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Share an end-to-end encrypted note that can be read only once.">
+  <meta name="theme-color" content="#071117">
+  <title>notefor.one — one-time encrypted notes</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/home.js" defer></script>
+</head>
+<body>
+  <header class="site-header shell">
+    <a class="brand" href="/">notefor.one</a>
+    <a class="source-link" href="https://github.com/lucaspiressimao/notefor.one" rel="noreferrer">Open source ↗</a>
+  </header>
+  <main class="shell">
+    <p class="eyebrow">Private by design</p>
+    <h1>A note for one person. One time.</h1>
+    <p class="lead">Encrypt a message in your browser and share its unique link. Opening the page does not destroy it; revealing it does.</p>
+
+    <form id="note-form" class="card" autocomplete="off">
+      <label for="note">Your private note</label>
+      <textarea id="note" maxlength="20000" required placeholder="Write something that should only be read once…"></textarea>
+      <div class="field-row">
+        <div>
+          <label for="expiration">Delete if unopened after</label>
+          <select id="expiration">
+            <option value="900">15 minutes</option>
+            <option value="3600">1 hour</option>
+            <option value="86400" selected>24 hours</option>
+            <option value="604800">7 days</option>
+          </select>
+        </div>
+        <button id="create-button" class="button" type="submit">Create private link</button>
+      </div>
+      <div class="counter"><span id="character-count">0</span> / 20,000 characters</div>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+
+      <section id="result" class="result hidden" aria-label="Shareable link">
+        <label for="share-url">Share this link</label>
+        <div class="share-row">
+          <input id="share-url" class="share-url" type="text" readonly>
+          <button id="copy-button" class="button secondary" type="button">Copy link</button>
+        </div>
+        <p class="hint">The encryption key is inside the link fragment and is never sent to this server.</p>
+      </section>
+    </form>
+
+    <div class="security-note"><span class="lock">◇</span><span>AES-256-GCM encryption happens locally. The server stores only encrypted data and atomically deletes it when consumed.</span></div>
+  </main>
+  <footer class="footer"><div class="shell">No accounts. No trackers. No plaintext on the server.</div></footer>
+</body>
+</html>

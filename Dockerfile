@@ -1,14 +1,18 @@
-FROM node:15.14.0
+FROM node:24-alpine
+
+ENV NODE_ENV=production \
+    HOST=0.0.0.0 \
+    PORT=3000
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
-COPY . .
+RUN npm ci --omit=dev && npm cache clean --force
 
-ENV PORT=80
-ENV HOST=0.0.0.0
-ENV TZ America/Sao_Paulo
-ENV ALGORITHM=aes-256-ctr
+COPY --chown=node:node src ./src
+COPY --chown=node:node public ./public
 
-EXPOSE 80
-CMD [ "node", "src/index.js" ]
+USER node
+EXPOSE 3000
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD wget -qO- http://127.0.0.1:3000/healthz || exit 1
+CMD ["node", "src/index.js"]

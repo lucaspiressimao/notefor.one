@@ -1,65 +1,77 @@
 # notefor.one
 
-A small application written in Node/Express on the server and vanilla javascript on the client. It allows you to send encrypted one-time-use messages to someone via unique URL's that are generated on the server - once someone views the note, the note is destroyed.
+An end-to-end encrypted service for sharing a note that can be consumed only once.
 
-made from https://github.com/joshterrill/hushnote
+## Security model
 
-## API Endpoints
+- The browser encrypts notes with AES-256-GCM through the Web Crypto API.
+- A new random encryption key and IV are generated for every note.
+- The key stays in the URL fragment (`#key`), which browsers do not send to the server.
+- MongoDB stores only ciphertext, an IV, a random identifier, and timestamps.
+- Reading is an explicit POST action, so link-preview bots do not destroy notes.
+- MongoDB's atomic `findOneAndDelete` guarantees that concurrent readers cannot both consume a note.
+- Unopened notes expire automatically through a MongoDB TTL index.
 
-### POST `/api/create/`
+This tool reduces accidental disclosure; it cannot protect a note after the recipient reveals it, a compromised browser, screenshots, malicious extensions, endpoint malware, or traffic sent without HTTPS. See [SECURITY.md](SECURITY.md).
 
-```
-Headers: Content/Type = application/json
-Body: {"note": "this is a test message"}
-------------------------------------------
-Success Response:
-{
-  "url": "http://localhost:3000/read/40312d32/160586e0",
-  "error": null
-}
-```
+## Requirements
 
-### GET `/api/read/:key/:pass`
+- Node.js 20.19 or newer
+- MongoDB 7 or newer for production
+- HTTPS in production (required by Web Crypto outside localhost)
 
-```
-Success Response:
-{
-  "note": "this is a test message",
-  "message": "Note has been destroyed."
-}
+## Local development
 
-Note Not Found Response:
-{
-  "note": null,
-  "message": "Could not find note, perhaps it has already been destroyed?"
-}
-
-Incorrect Pass Response:
-{
-  "note": null,
-  "message": "Incorrect URL parameters. Note has been destroyed."
-}
+```bash
+npm ci
+MEMORY_STORE=true npm start
 ```
 
-## Spinning up your own instance
+The development server is available at `http://localhost:3000`. Development notes remain only in process memory and disappear when the process stops. This mode must never be enabled in production.
 
-1. Install dependencies by typing `npm install`
+To use an existing MongoDB instance:
 
-2. Rename the `.env.example` file to be `.env`
+```bash
+cp .env.example .env
+npm start
+```
 
-3. In order for the server-side encryption and decryption to work correctly, an IV needs to be generated. This is a 16-character string that looks something like this: `f8b43da1eb3cc7c5` which is the example that was put inside of the `.env.example` file. If you would like to generate your own, you can do so by running: `node generate-iv.js`
+## Production with Docker
 
-4. Type `npm start` to run
+```bash
+docker build -t notefor-one:2 .
+docker run --read-only --tmpfs /tmp --init \
+  -e MONGO_URL='mongodb://mongo:27017' \
+  -e MONGO_DB='notefor_one' \
+  -e TRUST_PROXY='true' \
+  -p 3000:3000 \
+  notefor-one:2
+```
 
-## Docker
+Terminate TLS at a trusted reverse proxy and expose only the application port. Do not publish MongoDB to the internet.
 
-To use Docker image we will need to set:
-1 - IV=<the IV code 16 digit -> generated with `node generate-iv.js`>
-2 - SECRET=<32 digit pass phrase>
-3 - PUBLIC_URL=http://localhost:3000 <use yout custom domain if needed>
+## Environment variables
 
-``` docker run -d -e IV=97c13107fcbc9a67 -e SECRET=84b816f85bf46ced22c9c55cd5067c45 -e PUBLIC_URL=http://localhost:3000 -p 3000:80 dooloop/notefor.one:latest ```
+| Variable | Required | Description |
+| --- | --- | --- |
+| `MONGO_URL` | Production | MongoDB connection string |
+| `MONGO_DB` | No | Database name; defaults to `notefor_one` |
+| `MONGO_POOL_SIZE` | No | Connection pool size; defaults to `10` |
+| `PORT` | No | HTTP port; defaults to `3000` |
+| `HOST` | No | Listen address; defaults to `0.0.0.0` |
+| `TRUST_PROXY` | No | Set to `true` behind one trusted reverse proxy |
+| `MEMORY_STORE` | Development only | Stores notes in process memory |
 
-This will set IV and secret to your image and set public url to localhost (CHANGE IT FOR OTHER ENVIRONMENTS)
+The legacy `SECRET`, `IV`, `ALGORITHM`, and `PUBLIC_URL` settings are no longer used. Version 2 stores new notes in the `notes_v2` collection and does not expose the old server-decryption API.
 
-It will acessible from http://localhost:3000
+## Quality checks
+
+```bash
+npm test
+npm audit
+docker build -t notefor-one:2 .
+```
+
+## License
+
+[MIT](LICENSE)

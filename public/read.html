@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#071117">
+  <title>Read a private note — notefor.one</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/read.js" defer></script>
+</head>
+<body>
+  <header class="site-header shell"><a class="brand" href="/">notefor.one</a></header>
+  <main class="shell">
+    <article class="card read-card">
+      <p class="eyebrow">One-time note</p>
+      <h1>This note will disappear.</h1>
+      <p id="explanation" class="lead">When you reveal this note, its encrypted copy is permanently removed from the server. It cannot be opened again.</p>
+      <p id="warning" class="warning">Only continue when you are ready to read and save its contents.</p>
+      <button id="reveal-button" class="button" type="button">Reveal and destroy note</button>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+      <pre id="note" class="note hidden"></pre>
+    </article>
+  </main>
+  <footer class="footer"><div class="shell"><a href="/">Create a new private note</a></div></footer>
+</body>
+</html>
